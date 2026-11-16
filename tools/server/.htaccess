@@ -1,0 +1,52 @@
+# Configurazione per hosting Linux (Apache), per esempio Aruba Linux.
+# Ogni blocco è dentro <IfModule>: se il server non ha quel modulo, il blocco viene ignorato e il sito funziona lo stesso.
+
+# Pagina di errore del sito
+ErrorDocument 404 /404.html
+
+# Tutto su HTTPS (serve il certificato attivo dal pannello Aruba)
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTPS} off
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# Pagine del vecchio sito: chi arriva da Google o da un segnalibro trova la pagina nuova
+<IfModule mod_alias.c>
+  Redirect 301 "/chi è il dott. mirko croci.html" /il-professionista.html
+  Redirect 301 "/le tecniche e la strumentazione.html" /tecniche.html
+  Redirect 301 "/campi di applicazione.html" /
+  Redirect 301 "/dove ricevo.html" /
+</IfModule>
+
+# Tipi di file moderni, se il server non li conosce
+<IfModule mod_mime.c>
+  AddType font/woff2 .woff2
+  AddType image/webp .webp
+  AddType image/svg+xml .svg
+</IfModule>
+
+# Intestazioni di sicurezza
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "DENY"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Compressione dei file di testo
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript image/svg+xml application/xml text/plain
+</IfModule>
+
+# Cache: immagini e font per un anno, pagine, stili e script per un giorno
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType text/css "access plus 1 day"
+  ExpiresByType application/javascript "access plus 1 day"
+  ExpiresByType text/html "access plus 1 hour"
+</IfModule>

@@ -12,3 +12,60 @@
   for = "/img/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Pagine del vecchio sito: chi arriva da Google o da un segnalibro trova la pagina nuova (301 = spostata per sempre).
+# Ogni indirizzo è scritto con gli spazi e con i caratteri codificati, perché i server li riportano in modi diversi.
+[[redirects]]
+  from = "/chi è il dott. mirko croci.html"
+  to = "/il-professionista.html"
+  status = 301
+[[redirects]]
+  from = "/chi%20%C3%A8%20il%20dott.%20mirko%20croci.html"
+  to = "/il-professionista.html"
+  status = 301
+[[redirects]]
+  from = "/le tecniche e la strumentazione.html"
+  to = "/tecniche.html"
+  status = 301
+[[redirects]]
+  from = "/le%20tecniche%20e%20la%20strumentazione.html"
+  to = "/tecniche.html"
+  status = 301
+[[redirects]]
+  from = "/campi di applicazione.html"
+  to = "/"
+  status = 301
+[[redirects]]
+  from = "/campi%20di%20applicazione.html"
+  to = "/"
+  status = 301
+[[redirects]]
+  from = "/dove ricevo.html"
+  to = "/"
+  status = 301
+[[redirects]]
+  from = "/dove%20ricevo.html"
+  to = "/"
+  status = 301
+
+# Cartelle di lavoro che non fanno parte del sito: se finissero online, rispondono "non trovato".
+[[redirects]]
+  from = "/materiali-cliente/*"
+  to = "/404.html"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/FIleVari/*"
+  to = "/404.html"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/tools/*"
+  to = "/404.html"
+  status = 404
+  force = true

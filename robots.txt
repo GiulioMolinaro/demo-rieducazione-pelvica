@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /materiali-cliente/
+Disallow: /FIleVari/
+Disallow: /tools/
+
+Sitemap: https://www.rieducazionepelvica.it/sitemap.xml
